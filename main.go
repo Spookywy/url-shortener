@@ -1,19 +1,18 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello there!")
+func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       "Hello there!",
+	}, nil
 }
 
 func main() {
-	log.Default().Println("Starting server")
-
-	http.HandleFunc("/", hello)
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	// Make the handler available for Remote Procedure Call by AWS Lambda
+	lambda.Start(handler)
 }
