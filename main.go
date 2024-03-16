@@ -8,10 +8,22 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	if request.HTTPMethod != http.MethodGet {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusMethodNotAllowed,
+			Body:       "Method Not Allowed",
+			Headers: map[string]string{
+				"Content-Type": "text/plain",
+			},
+		}, nil
+	}
+
+	shorten_url := request.PathParameters["shorten_url"]
+
 	return events.APIGatewayProxyResponse{
 		StatusCode: http.StatusPermanentRedirect,
 		Headers: map[string]string{
-			"Location": "https://time2guess.fun",
+			"Location": shorten_url,
 		},
 	}, nil
 }
