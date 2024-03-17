@@ -4,3 +4,4 @@
   publish = "site"
 [build.environment]
   GO_IMPORT_PATH = "github.com/Spookywy/url-shortener"
+  GO_VERSION = "1.22.1"
