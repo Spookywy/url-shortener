@@ -15,5 +15,8 @@ func main() {
 	mux.HandleFunc("/", Handler)
 
 	port := os.Getenv("PORT")
-	http.ListenAndServe("0.0.0.0:"+port, mux)
+	if port == "" {
+		port = "8080"
+	}
+	http.ListenAndServe(":"+port, mux)
 }
