@@ -1,0 +1,11 @@
+name: Sleep Preventer
+on:
+  schedule:
+    - cron: "*/14 * * * *"
+
+jobs:
+  sleep_preventer:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prevent server from sleeping by sending an HTTP request
+        run: curl -X GET 'https://url-shortener-p3em.onrender.com/'
