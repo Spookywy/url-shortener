@@ -1,7 +1,8 @@
 name: Sleep Preventer
 on:
   schedule:
-    - cron: "*/14 * * * *"
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
 
 jobs:
   sleep_preventer:
