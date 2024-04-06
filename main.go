@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func GetHome(w http.ResponseWriter, r *http.Request) {
@@ -16,6 +19,16 @@ func GetShortenedUrl(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("An error occured while loading the .env file")
+	}
+
+	client := NewDbClient()
+	// Remove the following lines (test purposes)
+	colection := client.Database("url_shortener").Collection("urls")
+	fmt.Println(colection)
+
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", GetHome)
 	mux.HandleFunc("/{shortenedUrl}", GetShortenedUrl)
