@@ -1,13 +1,22 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/joho/godotenv"
 )
+
+const database, collection = "url-shortener", "urls"
+
+type URL struct {
+	Hash string `bson:"hash"`
+	URL  string `bson:"url"`
+}
 
 func GetHome(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>Url shortener</h1>")
@@ -15,7 +24,27 @@ func GetHome(w http.ResponseWriter, r *http.Request) {
 
 func GetShortenedUrl(w http.ResponseWriter, r *http.Request) {
 	shortenedUrl := r.PathValue("shortenedUrl")
-	fmt.Fprintf(w, "<h1>You tried to access the following url: %s</h1>", shortenedUrl)
+
+	client := NewDbClient()
+	defer client.Disconnect(context.Background())
+
+	collection := client.Database(database).Collection(collection)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := map[string]interface{}{
+		"hash": shortenedUrl,
+	}
+
+	log.Printf("Trying to retrieve the url for hash %s", shortenedUrl)
+	var url URL
+	err := collection.FindOne(ctx, filter).Decode(&url)
+	if err != nil {
+		http.Error(w, "Url not found", http.StatusNotFound)
+		return
+	}
+
+	http.Redirect(w, r, url.URL, http.StatusSeeOther)
 }
 
 func main() {
@@ -23,11 +52,6 @@ func main() {
 	if err != nil {
 		log.Fatal("An error occured while loading the .env file")
 	}
-
-	client := NewDbClient()
-	// Remove the following lines (test purposes)
-	colection := client.Database("url_shortener").Collection("urls")
-	fmt.Println(colection)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", GetHome)
