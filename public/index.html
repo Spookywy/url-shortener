@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+  <title>URL Shortener</title>
+  <meta name="description" content="A simple URL shortener" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/scripts/htmx.min.js"></script>
+  <script src="/scripts/json-enc.js"></script>
+</head>
+<html>
+  <body>
+    <h1>URL Shortener</h1>
+    <form hx-post="/shorten" hx-ext="json-enc" hx-target="#response">
+      <input type="text" name="url" placeholder="Enter an URL" required />
+      <button type="submit">Shorten</button>
+    </form>
+    <p id="response"></p>
+  </body>
+</html>

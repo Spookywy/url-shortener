@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -14,10 +13,6 @@ import (
 )
 
 const database, collection = "url-shortener", "urls"
-
-func GetHome(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>Url shortener</h1>")
-}
 
 func GetShortenedUrl(w http.ResponseWriter, r *http.Request) {
 	shortenedUrl := r.PathValue("shortenedUrl")
@@ -95,7 +90,7 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", GetHome)
+	mux.Handle("/", http.FileServer(http.Dir("public")))
 	mux.HandleFunc("GET /{shortenedUrl}", GetShortenedUrl)
 	mux.HandleFunc("POST /shorten", PostShortenedUrl)
 
