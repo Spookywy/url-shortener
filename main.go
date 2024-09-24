@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -74,13 +75,11 @@ func PostShortenedUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := map[string]string{
-		"hash": hashString,
-	}
+	htmlShortenedLink := fmt.Sprintf("<a href=\"/%s\">Shortened link</a>", hashString)
 
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response)
+	w.Write([]byte(htmlShortenedLink))
 }
 
 func main() {
