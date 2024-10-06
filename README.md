@@ -18,6 +18,12 @@ go run url-shortener
 
 Navigate to `http://localhost:8080` to access the server.
 
+This project uses Tailwind CSS. To build the CSS, run the following command:
+
+```bash
+npm run buildCss
+```
+
 # Deployment
 
 The server is deployed at the following address: https://url-shortener-p3em.onrender.com/

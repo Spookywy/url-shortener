@@ -75,7 +75,7 @@ func PostShortenedUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	htmlShortenedLink := fmt.Sprintf("<a href=\"/%s\">Shortened link</a>", hashString)
+	htmlShortenedLink := fmt.Sprintf("<a href=\"/%s\">🔗 Shortened link</a>", hashString)
 
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(http.StatusCreated)

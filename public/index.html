@@ -8,13 +8,47 @@
   <script src="/scripts/json-enc.js"></script>
   <link href="./styles/output.css" rel="stylesheet" />
 </head>
-<html>
-  <body>
-    <h1>URL Shortener</h1>
-    <form hx-post="/shorten" hx-ext="json-enc" hx-target="#response">
-      <input type="text" name="url" placeholder="Enter an URL" required />
-      <button type="submit">Shorten</button>
-    </form>
-    <div id="response"></div>
+<html class="h-full">
+  <body class="flex h-full flex-col bg-neutral-900 pt-5 text-white text-center">
+    <header>
+      <h1 class="text-6xl font-extrabold text-green-200">URL Shortener</h1>
+    </header>
+    <div class="flex-grow flex flex-col items-center justify-center">
+      <form
+        class="flex flex-col items-center gap-4"
+        hx-post="/shorten"
+        hx-ext="json-enc"
+        hx-target="#response"
+      >
+        <input
+          class="h-10 md:w-[40rem] lg:w-[48rem] w-80 rounded-lg text-neutral-900 p-4"
+          type="text"
+          name="url"
+          placeholder="Enter an URL"
+          required
+        />
+        <button
+          class="h-10 w-32 rounded-lg bg-neutral-700 text-neutral-100 hover:bg-neutral-100 hover:text-neutral-900 active:bg-neutral-100 active:text-neutral-900"
+          type="submit"
+        >
+          Shorten
+        </button>
+      </form>
+      <div class="mt-6 text-green-200 font-bold" id="response"></div>
+    </div>
+    <footer>
+      <div
+        class="mx-10 mt-auto flex h-28 gap-3 flex-col items-center justify-center border-t border-neutral-700 text-neutral-400 sm:gap-2 sm:h-16 sm:flex-row"
+      >
+        <p class="text-center">Made with ❤️ by <b>Valentin Menoret</b></p>
+        <p class="hidden sm:block">&#8226;</p>
+        <a
+          href="https://github.com/Spookywy/url-shortener"
+          class="hover:text-neutral-100"
+        >
+          Source code
+        </a>
+      </div>
+    </footer>
   </body>
 </html>
