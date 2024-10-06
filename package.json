@@ -1,0 +1,21 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "An url shortener made with Go",
+  "scripts": {
+    "buildCss": "tailwindcss -i ./public/styles/main.css -o ./public/styles/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spookywy/url-shortener.git"
+  },
+  "author": "Spookywy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Spookywy/url-shortener/issues"
+  },
+  "homepage": "https://url-shortener-p3em.onrender.com/",
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
