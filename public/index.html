@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="/scripts/htmx.min.js"></script>
   <script src="/scripts/json-enc.js"></script>
+  <script src="/scripts/response-target.js"></script>
   <link href="./styles/output.css" rel="stylesheet" />
 </head>
 <html class="h-full">
@@ -13,12 +14,16 @@
     <header>
       <h1 class="text-6xl font-extrabold text-green-200">URL Shortener</h1>
     </header>
-    <div class="flex-grow flex flex-col items-center justify-center">
+    <div
+      class="flex-grow flex flex-col items-center justify-center"
+      hx-ext="response-targets"
+    >
       <form
         class="flex flex-col items-center gap-4"
         hx-post="/shorten"
         hx-ext="json-enc"
         hx-target="#response"
+        hx-target-error="#response"
       >
         <input
           class="h-10 md:w-[40rem] lg:w-[48rem] w-80 rounded-lg text-neutral-900 p-4"
@@ -34,7 +39,7 @@
           Shorten
         </button>
       </form>
-      <div class="mt-6 text-green-200 font-bold" id="response"></div>
+      <div class="mt-6 font-bold" id="response"></div>
     </div>
     <footer>
       <div
